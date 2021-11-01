@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
 // Ionicons를 사용하기 위해서는 expo font를 설치해야만 한다.
 import * as Font from "expo-font";
+import { Asset } from "expo-asset";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,11 @@ export default function App() {
   const preload = () => {
     const fontsToLoad = [Ionicons.font];
     const fontPromises = fontsToLoad.map((font) => Font.loadAsync(font));
-    return Promise.all(fontPromises);
+    const imagesToLoad = [require("./assets/DrawBy_Logo.png")];
+    // 이미지 링크를 삽입할 수 있음. 나중에 서버에 업로드 하면 서버 내 이미지 링크 삽입 필요
+    const imagePromises = imagesToLoad.map((image) => Asset.loadAsync(image));
+    const promises = [...fontPromises, ...imagePromises];
+    return Promise.all(promises);
   };
   if (loading) {
     return (
