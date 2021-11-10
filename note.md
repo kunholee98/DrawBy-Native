@@ -60,6 +60,18 @@ export default function Nav2({ navigation }) {
 // Navigator.Screen에 부여한 이름과 동일한 페이지로 이동.
 ```
 
+2. TouchableWithoutFeedback
+
+TouchblaOpacitiy랑 똑같지만, 눌렀을 때 시각적인 피드백이 없다.
+
+보통 키보드를 없에기 위해서 배경을 누르는 것을 구현하고자 할때 사용한다. (Keyboard.dismiss())
+
+3. ActivityIndicator
+
+로딩할 때 많이 보던 그 동그라미 돌아가는 거를 보여주는 컴포넌트
+
+보통 버튼을 눌렀을 때, loading prop을 받아 만약 loading === true라면 로딩 컴포넌트 실행
+
 ### Styled
 
 React와 동일하게 사용되는 styled.
@@ -74,3 +86,40 @@ import styled from "styled-components/native";
 
 - **flex: 1** : 이는 column이 하나라는 것을 의미하는 native 만의 요소
 - React, CSS와 달리 부모의 font를 설정해주어도 자식 컴포넌트는 이를 상속받지 않는다. (Text에 관한 설정은 모두 Text 컴포넌트 안에서 설정)
+
+### TextInput
+
+텍스트를 적을 수 있는 박스
+
+```javascript
+import { TextInput } from "react-native";
+import { useRef } from "React";
+<TextInput></TextInput>;
+```
+
+1. ref, onSubmitEditing을 이용하여 enter를 눌렀을 때 다음 입력칸으로 넘어갈 수 있음
+
+```javascript
+const nextRef = useRef();
+const onNext = () => {
+  nextRef.current?.focus();
+};
+<TextInput onSubmitEditing={onNext}>last</TextInput>;
+<TextInput ref={nextRef}>next</TextInput>;
+```
+
+### KeyboardAvoidingView
+
+키보드가 나타났을 때 화면이 키보드에 가려지지 않도록 요소를 위로 자동적으로 올려주는 컴포넌트
+
+1. behavior: 어떤 것을 기준으로 위로 올릴 것인가 ex) padding, position
+2. keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0} : os가 ios라면 vertical offset을 30만큼 (os마다 설정 가능)
+
+### 백엔드 localhost를 바깥으로 노출하는 방법
+
+1. ngrok
+2. localtunnel
+
+```shell
+npx localtunnel --port 4000
+```
